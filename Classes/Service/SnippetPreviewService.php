@@ -53,7 +53,7 @@ class SnippetPreviewService
 
         JavascriptUtility::loadJavascript($this->pageRenderer);
 
-        $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/YoastSeo/yoastModal');
+        $this->pageRenderer->loadJavaScriptModule('@YoastSeoForTypo3/YoastSeo/yoastModal.js');
         $this->pageRenderer->addCssFile('EXT:yoast_seo/Resources/Public/CSS/yoast.min.css');
     }
 }

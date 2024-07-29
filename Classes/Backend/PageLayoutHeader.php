@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace YoastSeoForTypo3\YoastSeo\Backend;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -20,7 +21,7 @@ class PageLayoutHeader
 
     public function __construct(
         UrlService $urlService,
-        SnippetPreviewService $snippetPreviewService
+        SnippetPreviewService $snippetPreviewService,
     ) {
         $this->urlService = $urlService;
         $this->snippetPreviewService = $snippetPreviewService;
@@ -29,7 +30,8 @@ class PageLayoutHeader
     public function render(array $params = null, $parentObj = null): string
     {
         $languageId = $this->getLanguageId();
-        $pageId = (int)GeneralUtility::_GET('id');
+        $request = $this->getRequest();
+        $pageId = (int)$request->getQueryParams('id');
         $currentPage = $this->getCurrentPage($pageId, $languageId, $parentObj);
 
         if (!is_array($currentPage) || !$this->shouldShowPreview($pageId, $currentPage)) {
@@ -104,5 +106,10 @@ class PageLayoutHeader
     {
         $moduleData = (array)BackendUtility::getModuleData(['language'], [], 'web_layout');
         return (int)$moduleData['language'];
+    }
+
+    private function getRequest(): ?ServerRequestInterface
+    {
+        return array_key_exists('TYPO3_REQUEST',$GLOBALS)?$GLOBALS['TYPO3_REQUEST']:null;
     }
 }

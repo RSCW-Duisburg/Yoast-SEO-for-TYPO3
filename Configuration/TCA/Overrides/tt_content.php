@@ -26,3 +26,5 @@ foreach ($GLOBALS['TCA']['tt_content']['types'] as $type => $config) {
             $GLOBALS['TCA']['tt_content']['types'][$type]['showitem']
         );
 }
+$GLOBALS['TCA']['tx_yoastseo_related_focuskeyword']['ctrl']['allowedOnPages'] = true;
+$GLOBALS['TCA']['tx_yoastseo_prominent_word']['ctrl']['allowedOnPages'] = true;

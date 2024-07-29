@@ -8,6 +8,8 @@ use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use YoastSeoForTypo3\YoastSeo\Record\Record;
 use YoastSeoForTypo3\YoastSeo\Record\RecordService;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Frontend\Page\PageInformation;
 
 class AdvancedRobotsGenerator
 {
@@ -27,7 +29,7 @@ class AdvancedRobotsGenerator
         if ($activeRecord instanceof Record && $activeRecord->shouldGenerateRobotsTag()) {
             $record = $activeRecord->getRecordData();
         } else {
-            $record = $params['page'];
+            $record = $this->getRecordFromParams($params);
         }
 
         $noImageIndex = (bool)($record['tx_yoastseo_robots_noimageindex'] ?? false);
@@ -56,5 +58,18 @@ class AdvancedRobotsGenerator
 
             $manager->addProperty('robots', implode(',', $robots));
         }
+    }
+
+    private function getRecordFromParams(array $params): array
+    {
+        /** @var ServerRequestInterface $request */
+        $request = $params['request'] ?? null;
+        if ($request instanceof ServerRequestInterface) {
+            $pageInformation = $request->getAttribute('frontend.page.information');
+            if ($pageInformation instanceof PageInformation) {
+                return $pageInformation->getPageRecord();
+            }
+        }
+        return [];
     }
 }

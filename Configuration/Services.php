@@ -17,7 +17,7 @@ return function (ContainerConfigurator $configurator, ContainerBuilder $containe
         $services->set('yoast_seo.dashboard.widget.pagesWithoutMetaDescription')
             ->class(PageOverviewWidget::class)
             ->arg('$dataProvider', new Reference(PagesWithoutDescriptionDataProvider::class))
-            ->arg('$view', new Reference('dashboard.views.widget'))
+            ->arg('$view', new Reference('dashboard.widgets'))
             ->arg('$buttonProvider', null)
             ->arg('$options', ['template' => 'Widget/PageWithoutMetaDescriptionWidget'])
             ->tag(
@@ -36,7 +36,7 @@ return function (ContainerConfigurator $configurator, ContainerBuilder $containe
         $services->set('yoast_seo.dashboard.widget.orphanedContent')
             ->class(PageOverviewWidget::class)
             ->arg('$dataProvider', new Reference(OrphanedContentDataProvider::class))
-            ->arg('$view', new Reference('dashboard.views.widget'))
+            ->arg('$view', new Reference('dashboard.widgets'))
             ->arg('$buttonProvider', null)
             ->arg('$options', ['template' => 'Widget/OrphanedContentWidget'])
             ->tag(

@@ -93,7 +93,7 @@ class StructuredDataProviderManager implements SingletonInterface
                         $cacheIdentifier,
                         $data,
                         ['pageId_' . $this->getTypoScriptFrontendController()->page['uid']],
-                        $this->getTypoScriptFrontendController()->get_cache_timeout()
+                        $this->getCacheTimeout()
                     );
                 }
 
@@ -157,5 +157,14 @@ class StructuredDataProviderManager implements SingletonInterface
             }
         }
         return $orderInformation;
+    }
+
+    protected function getCacheTimeout(): int
+    {
+        $tsfe = $this->getTypoScriptFrontendController();
+        if (isset($tsfe->page['cache_timeout'])) {
+            return (int)$tsfe->page['cache_timeout'];
+        }
+        return 3600; // Default cache timeout (1 hour)
     }
 }

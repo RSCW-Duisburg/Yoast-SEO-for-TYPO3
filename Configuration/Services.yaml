@@ -75,3 +75,7 @@ services:
     arguments:
       $excludedDoktypes: [3, 4, 6, 7, 199, 254, 255]
       $limit: 8
+
+  YoastSeoForTypo3\YoastSeo\Form\Element\InternalLinkingSuggestion:
+    arguments:
+        $data: []

@@ -16,8 +16,8 @@ class JavascriptUtility
         }
 
         if (YoastUtility::inProductionMode() === true) {
-            $pageRenderer->loadRequireJsModule('TYPO3/CMS/YoastSeo/dist/plugin');
-        } else {
+            $pageRenderer->loadJavaScriptModule('@YoastSeoForTypo3/YoastSeo/dist/plugin.js');
+        } else {    
             $pageRenderer->addHeaderData(
                 '<script type="text/javascript" src="https://localhost:3333/typo3conf/ext/yoast_seo/Resources/Public/JavaScript/dist/plugin.js" async></script>'
             );
